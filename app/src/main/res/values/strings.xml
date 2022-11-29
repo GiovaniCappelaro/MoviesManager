@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Movies Manager</string>
+
+    <string name="name">Nome</string>
+    <string name="year">Ano</string>
+    <string name="studio">Estúdio</string>
+    <string name="producer">Produtora</string>
+    <string name="madeBy">Feito por</string>
+    <string name="duration">Duração</string>
+    <string name="watched">Assistido</string>
+    <string name="rating">Avaliação</string>
+    <string name="genre">Gênero</string>
+
+    <string name="minutes">%1$dm</string>
+    <string name="hours">%1$dh</string>
+
+    <string name="save">Salvar</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Deletar</string>
+
+    <string name="add_movie">Adicionar Filme</string>
+    <string name="save_movie">Salvar Filme</string>
+    <string name="edit_movie">Editar Filme</string>
+    <string name="remove_movie">Remover Filme</string>
+    <string name="delete_movie">Deletar Filme</string>
+    <string name="order_by_name">Ordenar por Nome</string>
+    <string name="order_by_rating">Ordenar por Avaliação</string>
+
+    <string name="save_genre">Salvar Gênero</string>
+    <string name="edit_genre">Editar Gênero</string>
+    <string name="delete_genre">Deletar Gênero</string>
+</resources>
