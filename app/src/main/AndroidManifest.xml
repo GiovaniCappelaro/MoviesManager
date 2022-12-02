@@ -27,7 +27,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.MovieManagerActivity"
+            android:name=".view.MoviesManagerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

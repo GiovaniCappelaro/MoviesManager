@@ -18,7 +18,7 @@ import com.example.moviesmanager.model.Model.MOVIE_EDIT
 import com.example.moviesmanager.model.Model.MOVIE_EXTRA
 import com.example.moviesmanager.model.Movie
 
-class MovieManagerActivity: AppCompatActivity() {
+class MoviesManagerActivity: AppCompatActivity() {
 
     private val binding: ActivityMovieManagerBinding by lazy {
         ActivityMovieManagerBinding.inflate(layoutInflater)
@@ -123,14 +123,14 @@ class MovieManagerActivity: AppCompatActivity() {
 
     fun addMovie() {
         val intent = Intent(this, MovieActivity::class.java)
-        // arl.launch(intent)
+        arl.launch(intent)
     }
 
     fun editMovie(position: Int) {
         val intent = Intent(this, MovieActivity::class.java)
         intent.putExtra(MOVIE_EXTRA, movieList[position])
         intent.putExtra(MOVIE_EDIT, true)
-        // arl.launch(intent)
+        arl.launch(intent)
     }
 
     fun removeMovie(position: Int) {
@@ -141,7 +141,7 @@ class MovieManagerActivity: AppCompatActivity() {
     fun viewMovie(position: Int) {
         val intent = Intent(this, MovieActivity::class.java)
         intent.putExtra(MOVIE_EXTRA, movieList[position])
-        // arl.launch(intent)
+        arl.launch(intent)
     }
 
     fun orderMoviesByName() {

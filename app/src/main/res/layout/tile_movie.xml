@@ -72,7 +72,7 @@
                 android:contentDescription="@string/rating"
                 android:isIndicator="true"
                 android:numStars="5"
-                android:stepSize="0.1" />
+                android:stepSize="0.5" />
 
             <TextView
                 android:id="@+id/watchedTv"
