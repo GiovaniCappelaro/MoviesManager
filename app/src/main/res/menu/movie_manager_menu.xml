@@ -2,12 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/addMovieMi"
+        android:title="@string/add_movie" />
+
+    <item
+        android:id="@+id/editGenresMi"
+        android:title="@string/edit_genres" />
+
+    <item
         android:id="@+id/orderByNameMi"
-        android:icon="@drawable/ic_add"
         android:title="@string/order_by_name" />
 
     <item
         android:id="@+id/orderByRating"
-        android:icon="@drawable/ic_add"
         android:title="@string/order_by_rating" />
 </menu>

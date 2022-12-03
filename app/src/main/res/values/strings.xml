@@ -11,6 +11,8 @@
     <string name="rating">Avaliação</string>
     <string name="genre">Gênero</string>
 
+    <string name="not_watched">Não assistido</string>
+
     <string name="minutes">%1$dm</string>
     <string name="hours">%1$dh</string>
 
@@ -26,7 +28,16 @@
     <string name="order_by_name">Ordenar por Nome</string>
     <string name="order_by_rating">Ordenar por Avaliação</string>
 
+    <string name="add_genre">Adicionar Gênero</string>
     <string name="save_genre">Salvar Gênero</string>
     <string name="edit_genre">Editar Gênero</string>
+    <string name="edit_genres">Editar Gêneros</string>
+    <string name="remove_genre">Remover Gênero</string>
     <string name="delete_genre">Deletar Gênero</string>
+
+    <string name="empty_name_toast">O nome não pode ser vazio</string>
+    <string name="empty_year_toast">O ano não pode ser vazio</string>
+    <string name="empty_made_by_toast">O estúdio/produtora não pode ser vazio</string>
+    <string name="empty_duration_toast">A duração não pode ser vazio</string>
+    <string name="empty_genre_toast">O genero não pode ser vazio</string>
 </resources>

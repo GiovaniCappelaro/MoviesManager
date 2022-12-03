@@ -64,7 +64,7 @@ class MovieAdapter(
             if (movie.rating == null) {
                 ratingBar.isVisible = false;
             } else {
-                ratingBar.rating = movie.rating.toFloat()/2
+                ratingBar.rating = movie.rating.toFloat() / 2
             }
             if (movie.watched) {
                 watchedTv.text = ""

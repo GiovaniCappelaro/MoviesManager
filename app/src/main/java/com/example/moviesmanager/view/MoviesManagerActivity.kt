@@ -18,7 +18,7 @@ import com.example.moviesmanager.model.Model.MOVIE_EDIT
 import com.example.moviesmanager.model.Model.MOVIE_EXTRA
 import com.example.moviesmanager.model.Movie
 
-class MoviesManagerActivity: AppCompatActivity() {
+class MoviesManagerActivity : AppCompatActivity() {
 
     private val binding: ActivityMovieManagerBinding by lazy {
         ActivityMovieManagerBinding.inflate(layoutInflater)
@@ -85,6 +85,14 @@ class MoviesManagerActivity: AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
+            R.id.addMovieMi -> {
+                addMovie()
+                true
+            }
+            R.id.editGenresMi -> {
+                editGenres()
+                true
+            }
             R.id.orderByNameMi -> {
                 orderMoviesByName()
                 true
@@ -144,6 +152,11 @@ class MoviesManagerActivity: AppCompatActivity() {
         arl.launch(intent)
     }
 
+    fun editGenres() {
+        val intent = Intent(this, GenreListActivity::class.java)
+        arl.launch(intent)
+    }
+
     fun orderMoviesByName() {
         movieList.sortBy { it.name }
         movieAdapter.notifyDataSetChanged()
@@ -159,13 +172,13 @@ class MoviesManagerActivity: AppCompatActivity() {
             movieList.add(
                 Movie(
                     id = i,
-                    name = "Movie",
+                    name = "Movie " + i,
                     year = 2000,
                     studio = "Studio",
                     producer = null,
                     duration = 120,
                     watched = false,
-                    rating = 10,
+                    rating = i,
                     genre = Genre(0, "Ação"),
                 )
             )
