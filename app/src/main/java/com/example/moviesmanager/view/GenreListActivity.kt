@@ -2,20 +2,23 @@ package com.example.moviesmanager.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
+import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.moviesmanager.R
 import com.example.moviesmanager.adapter.GenreAdapter
 import com.example.moviesmanager.databinding.ActivityGenreListBinding
 import com.example.moviesmanager.model.Genre
-import com.example.moviesmanager.model.Model
 import com.example.moviesmanager.model.Model.GENRE_EXTRA
+import kotlin.random.Random
 
 class GenreListActivity : AppCompatActivity() {
 
@@ -32,6 +35,7 @@ class GenreListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        supportActionBar?.setTitle(R.string.genres)
 
         genreAdapter = GenreAdapter(this, genreList)
         binding.genreLv.adapter = genreAdapter
@@ -57,17 +61,6 @@ class GenreListActivity : AppCompatActivity() {
         }
 
         registerForContextMenu(binding.genreLv)
-
-        binding.genreLv.onItemClickListener = object : AdapterView.OnItemClickListener {
-            override fun onItemClick(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                viewGenre(position)
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -78,6 +71,7 @@ class GenreListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.addGenreMi -> {
+                Log.d("MY", "ADD")
                 addGenre()
                 true
             }
@@ -109,28 +103,51 @@ class GenreListActivity : AppCompatActivity() {
         }
     }
 
-    // TODO persistence
+    private fun addGenre() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = this.layoutInflater
+        val view = inflater.inflate(R.layout.genre_dialog_box, null)
+        val nameEt = view.findViewById<EditText>(R.id.nameEt)
 
-    fun addGenre() {
-        val intent = Intent(this, MovieActivity::class.java)
-        // arl.launch(intent)
+        builder
+            .setTitle(R.string.genre_name)
+            .setView(view)
+            .setPositiveButton(R.string.add_genre) { dialog, id ->
+                val name = nameEt.text.toString()
+                val genre = Genre(Random(System.currentTimeMillis()).nextInt(), name)
+                genreList.add(genre)
+                genreAdapter.notifyDataSetChanged()
+            }
+            .setNegativeButton(R.string.cancel) { dialog, id ->
+                dialog.cancel()
+            }
+        builder.create().show()
     }
 
-    fun editGenre(position: Int) {
-        val intent = Intent(this, MovieActivity::class.java)
-        intent.putExtra(Model.MOVIE_EXTRA, genreList[position])
-        intent.putExtra(Model.MOVIE_EDIT, true)
-        // arl.launch(intent)
+    private fun editGenre(position: Int) {
+        val builder = AlertDialog.Builder(this)
+        val inflater = this.layoutInflater
+        val view = inflater.inflate(R.layout.genre_dialog_box, null)
+        val nameEt = view.findViewById<EditText>(R.id.nameEt)
+        nameEt.setText(genreList[position].name)
+
+        builder
+            .setTitle(R.string.genre_name)
+            .setView(view)
+            .setPositiveButton(R.string.save_genre) { dialog, id ->
+                val name = nameEt.text.toString()
+                val genre = Genre(Random(System.currentTimeMillis()).nextInt(), name)
+                genreList[position] = genre
+                genreAdapter.notifyDataSetChanged()
+            }
+            .setNegativeButton(R.string.cancel) { dialog, id ->
+                dialog.cancel()
+            }
+        builder.create().show()
     }
 
-    fun removeGenre(position: Int) {
+    private fun removeGenre(position: Int) {
         genreList.removeAt(position)
         genreAdapter.notifyDataSetChanged()
-    }
-
-    fun viewGenre(position: Int) {
-        val intent = Intent(this, MovieActivity::class.java)
-        intent.putExtra(Model.MOVIE_EXTRA, genreList[position])
-        // arl.launch(intent)
     }
 }

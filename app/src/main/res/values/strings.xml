@@ -19,6 +19,7 @@
     <string name="save">Salvar</string>
     <string name="edit">Editar</string>
     <string name="delete">Deletar</string>
+    <string name="cancel">Cancelar</string>
 
     <string name="add_movie">Adicionar Filme</string>
     <string name="save_movie">Salvar Filme</string>
@@ -34,6 +35,9 @@
     <string name="edit_genres">Editar Gêneros</string>
     <string name="remove_genre">Remover Gênero</string>
     <string name="delete_genre">Deletar Gênero</string>
+
+    <string name="genres">Gêneros</string>
+    <string name="genre_name">Nome do Gênero</string>
 
     <string name="empty_name_toast">O nome não pode ser vazio</string>
     <string name="empty_year_toast">O ano não pode ser vazio</string>

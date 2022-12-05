@@ -5,13 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/nameTv"
+    <EditText
+        android:id="@+id/nameEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/name"
-        android:textSize="25sp"
+        android:layout_margin="15dp"
+        android:autofillHints="@string/genre_name"
+        android:hint="@string/genre_name"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

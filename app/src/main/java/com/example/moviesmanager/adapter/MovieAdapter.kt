@@ -67,9 +67,9 @@ class MovieAdapter(
                 ratingBar.rating = movie.rating.toFloat() / 2
             }
             if (movie.watched) {
-                watchedTv.text = ""
-            } else {
                 watchedTv.text = context.getString(R.string.watched)
+            } else {
+                watchedTv.text = ""
             }
         }
 

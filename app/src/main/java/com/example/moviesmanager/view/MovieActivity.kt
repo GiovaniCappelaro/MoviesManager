@@ -72,6 +72,7 @@ class MovieActivity : AppCompatActivity() {
             binding.watchedCb.isChecked = movie.watched
             movie.rating?.let {
                 binding.ratingBar.rating = it.toFloat() / 2
+                binding.ratingBar.visibility = View.VISIBLE
             }
 
             if (!editingMovie) {
