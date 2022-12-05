@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ListView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.core.view.isVisible
 import com.example.moviesmanager.R
-import com.example.moviesmanager.model.Movie
+import com.example.moviesmanager.model.entity.Movie
 
 class MovieAdapter(
     context: Context,

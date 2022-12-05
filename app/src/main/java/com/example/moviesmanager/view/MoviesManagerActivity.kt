@@ -2,6 +2,7 @@ package com.example.moviesmanager.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
@@ -12,11 +13,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.moviesmanager.R
 import com.example.moviesmanager.adapter.MovieAdapter
+import com.example.moviesmanager.controller.GenreController
+import com.example.moviesmanager.controller.MovieController
 import com.example.moviesmanager.databinding.ActivityMovieManagerBinding
-import com.example.moviesmanager.model.Genre
-import com.example.moviesmanager.model.Model.MOVIE_EDIT
-import com.example.moviesmanager.model.Model.MOVIE_EXTRA
-import com.example.moviesmanager.model.Movie
+import com.example.moviesmanager.model.entity.Genre
+import com.example.moviesmanager.model.entity.Model.MOVIE_EDIT
+import com.example.moviesmanager.model.entity.Model.MOVIE_EXTRA
+import com.example.moviesmanager.model.entity.Movie
 
 class MoviesManagerActivity : AppCompatActivity() {
 
@@ -24,17 +27,25 @@ class MoviesManagerActivity : AppCompatActivity() {
         ActivityMovieManagerBinding.inflate(layoutInflater)
     }
 
-    private val movieList: MutableList<Movie> = mutableListOf()
+    private lateinit var movieList: MutableList<Movie>
 
     private lateinit var movieAdapter: MovieAdapter
 
     private lateinit var arl: ActivityResultLauncher<Intent>
 
+    private lateinit var genreController: GenreController
+    private lateinit var movieController: MovieController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        mockMovieList()
+        // mockMovieList()
+
+        genreController = GenreController(this)
+        movieController = MovieController(this, genreController)
+
+        movieList = movieController.getAll()
 
         movieAdapter = MovieAdapter(this, movieList)
         binding.moviesLv.adapter = movieAdapter
@@ -54,8 +65,10 @@ class MoviesManagerActivity : AppCompatActivity() {
                     val pos = movieList.indexOfFirst { it.id == m.id }
 
                     if (pos == -1) {
+                        m.id = movieController.insert(m)
                         movieList.add(m)
                     } else {
+                        movieController.edit(m)
                         movieList[pos] = m
                     }
 
@@ -142,6 +155,8 @@ class MoviesManagerActivity : AppCompatActivity() {
     }
 
     fun removeMovie(position: Int) {
+        val id = movieList[position].id
+        movieController.remove(id)
         movieList.removeAt(position)
         movieAdapter.notifyDataSetChanged()
     }

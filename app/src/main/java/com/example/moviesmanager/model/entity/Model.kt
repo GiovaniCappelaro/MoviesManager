@@ -1,4 +1,4 @@
-package com.example.moviesmanager.model
+package com.example.moviesmanager.model.entity
 
 object Model {
     const val MOVIE_EXTRA = "MOVIE_EXTRA";

@@ -10,11 +10,12 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.moviesmanager.R
+import com.example.moviesmanager.controller.GenreController
 import com.example.moviesmanager.databinding.ActivityMovieBinding
-import com.example.moviesmanager.model.Genre
-import com.example.moviesmanager.model.Model.MOVIE_EDIT
-import com.example.moviesmanager.model.Model.MOVIE_EXTRA
-import com.example.moviesmanager.model.Movie
+import com.example.moviesmanager.model.entity.Genre
+import com.example.moviesmanager.model.entity.Model.MOVIE_EDIT
+import com.example.moviesmanager.model.entity.Model.MOVIE_EXTRA
+import com.example.moviesmanager.model.entity.Movie
 import kotlin.random.Random
 
 
@@ -28,18 +29,15 @@ class MovieActivity : AppCompatActivity() {
 
     private lateinit var genreList: List<Genre>
 
+    private lateinit var genreController: GenreController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        // Genre list and spinner
-        // TODO dinamic
-        genreList = mutableListOf(
-            Genre(Random(System.currentTimeMillis()).nextInt(), "Ação"),
-            Genre(Random(System.currentTimeMillis()).nextInt(), "Aventura"),
-            Genre(Random(System.currentTimeMillis()).nextInt(), "Romace"),
-            Genre(Random(System.currentTimeMillis()).nextInt(), "Terror"),
-        )
+        genreController = GenreController(this)
+
+        genreList = genreController.getAll()
 
         val genreAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
             this,

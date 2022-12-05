@@ -15,9 +15,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.moviesmanager.R
 import com.example.moviesmanager.adapter.GenreAdapter
+import com.example.moviesmanager.controller.GenreController
 import com.example.moviesmanager.databinding.ActivityGenreListBinding
-import com.example.moviesmanager.model.Genre
-import com.example.moviesmanager.model.Model.GENRE_EXTRA
+import com.example.moviesmanager.model.entity.Genre
+import com.example.moviesmanager.model.entity.Model.GENRE_EXTRA
 import kotlin.random.Random
 
 class GenreListActivity : AppCompatActivity() {
@@ -26,39 +27,25 @@ class GenreListActivity : AppCompatActivity() {
         ActivityGenreListBinding.inflate(layoutInflater)
     }
 
-    private val genreList: MutableList<Genre> = mutableListOf()
+    private lateinit var genreList: MutableList<Genre>
 
     private lateinit var genreAdapter: GenreAdapter
 
-    private lateinit var arl: ActivityResultLauncher<Intent>
+    private lateinit var genreController: GenreController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         supportActionBar?.setTitle(R.string.genres)
 
+        genreController = GenreController(this)
+
+        genreList = genreController.getAll()
+
+        Log.d("MY", genreList.toString())
+
         genreAdapter = GenreAdapter(this, genreList)
         binding.genreLv.adapter = genreAdapter
-
-        arl = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val genre = result.data?.getParcelableExtra<Genre>(GENRE_EXTRA)
-
-                genre?.let { g ->
-                    val pos = genreList.indexOfFirst { it.id == g.id }
-
-                    if (pos == -1) {
-                        genreList.add(g)
-                    } else {
-                        genreList[pos] = g
-                    }
-
-                    genreAdapter.notifyDataSetChanged()
-                }
-            }
-        }
 
         registerForContextMenu(binding.genreLv)
     }
@@ -71,7 +58,6 @@ class GenreListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.addGenreMi -> {
-                Log.d("MY", "ADD")
                 addGenre()
                 true
             }
@@ -112,13 +98,14 @@ class GenreListActivity : AppCompatActivity() {
         builder
             .setTitle(R.string.genre_name)
             .setView(view)
-            .setPositiveButton(R.string.add_genre) { dialog, id ->
+            .setPositiveButton(R.string.add_genre) { _, _ ->
                 val name = nameEt.text.toString()
                 val genre = Genre(Random(System.currentTimeMillis()).nextInt(), name)
+                genre.id = genreController.insert(genre)
                 genreList.add(genre)
                 genreAdapter.notifyDataSetChanged()
             }
-            .setNegativeButton(R.string.cancel) { dialog, id ->
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.cancel()
             }
         builder.create().show()
@@ -129,24 +116,28 @@ class GenreListActivity : AppCompatActivity() {
         val inflater = this.layoutInflater
         val view = inflater.inflate(R.layout.genre_dialog_box, null)
         val nameEt = view.findViewById<EditText>(R.id.nameEt)
-        nameEt.setText(genreList[position].name)
+        val genre = genreList[position]
+        nameEt.setText(genre.name)
 
         builder
             .setTitle(R.string.genre_name)
             .setView(view)
-            .setPositiveButton(R.string.save_genre) { dialog, id ->
+            .setPositiveButton(R.string.save_genre) { _, _ ->
                 val name = nameEt.text.toString()
-                val genre = Genre(Random(System.currentTimeMillis()).nextInt(), name)
+                genre.name = name
+                genreController.edit(genre)
                 genreList[position] = genre
                 genreAdapter.notifyDataSetChanged()
             }
-            .setNegativeButton(R.string.cancel) { dialog, id ->
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.cancel()
             }
         builder.create().show()
     }
 
     private fun removeGenre(position: Int) {
+        val id = genreList[position].id
+        genreController.remove(id)
         genreList.removeAt(position)
         genreAdapter.notifyDataSetChanged()
     }
